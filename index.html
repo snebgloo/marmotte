@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Botte les marmottes</title>
+<script type="text/javascript" src="marmotte.js"></script>
+<script type="text/javascript" src="botte.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="chrono.js"></script>
+<script type="text/javascript" src="audio.js"></script>
+<script type="text/javascript" src="mur.js"></script>
+</head>
+
+<body>
+<canvas id="jeu" width="800" height="600" onClick="canvas_click(event)" onMouseOver="canvas_over(event)" onMouseOut="canvas_out(event)" onMouseMove="canvas_move(event)"></canvas>
+<div id="infos" style="float:right"><p>Score</p><p id="score"></p>
+<p>Time : </p><p id="time"></p></div>
+
+</body>
+<script type="text/javascript">
+	mainGame();
+	document.onkeyup=applyKey;
+</script>
+</html>
