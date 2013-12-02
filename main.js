@@ -130,16 +130,9 @@ function mainGame(){
             // son terrier
             //pointTerrierAudio = repereAudio(tabMarmottestabMarmottes[tabMarmottes.length-1].getX(), tabMarmottes[tabMarmottes.length-1].getY());
             
-            
-            murDevant = new Mur.prototype.init(contextAudio, 14, bufferList[3], 0.3);
-            murDerriere = new Mur.prototype.init(contextAudio, -2, bufferList[3], 0.3);
-            
-            
-            murDevant.output.connect(contextAudio.destination);
-            murDerriere.output.connect(contextAudio.destination);
 
-                        // lancement du son
-                        audio.playMovingSound(2, 1);
+            // lancement du son
+            audio.playMovingSound(2, 1);
             
             // pré placement des coordoonées audio pour éviter un clic lors du changement de place
             // on fait correspondre les coordonnées de la marmotte dans le canvas à celles du repère audio

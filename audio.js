@@ -5,7 +5,7 @@ var Audio = function(){
 
 Audio.prototype.init = function(){
 
-       // this.loadedSounds = 0;
+    this.loadedSounds = 0;
 
 	// création de l'audioContext et chargement des fichiers audio
 	this.initContext = function() {
@@ -48,10 +48,15 @@ Audio.prototype.init = function(){
                   }
                   bufferList[index] = buffer;
                   
-                  // si tous les fichiers sont chargés
-                  //if (++caller.loadedSounds == urlList.length) {
-                       //caller.play(0);
-                       //soundsOK = true;
+                  // si tous les fichiers sont chargés, on crée les murs
+                  if (++caller.loadedSounds == urlList.length) {
+                      murDevant = new Mur.prototype.init(contextAudio, 14, bufferList[3], 0.3);
+                      murDerriere = new Mur.prototype.init(contextAudio, -2, bufferList[3], 0.3);
+                                           
+                                           
+                      murDevant.output.connect(contextAudio.destination);
+                      murDerriere.output.connect(contextAudio.destination);
+                  }
                 },
                 function(error) {
                   console.error('decodeAudioData error', error);
