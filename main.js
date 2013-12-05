@@ -20,10 +20,10 @@ var gameTime = 100;
 var audio;
 var contextAudio;
 var urlList =[
-                  'http://localhost:8888/V3/sound/move.wav',
-                  'http://localhost:8888/V3/sound/nomoretime_10s.wav',
-                  'http://localhost:8888/V3/sound/terreMarmotte.wav',
-                  'http://localhost:8888/V3/sound/impulseResponse.wav'
+                  'http://localhost:8888/V3/sound/terreMarmotte2.wav',
+                  'http://localhost:8888/V3/sound/impulseResponse.wav',
+                  'http://localhost:8888/V3/sound/marmotteBouge1.wav',
+                  'http://localhost:8888/V3/sound/ambianceNoBirds.wav'
                 ];
 var bufferList = new Array();
 var bufferLoader;
@@ -33,6 +33,7 @@ var delay;
 var reverb;
 var murDevant;
 var murDerriere;
+var sourceAmbiance;
 
 var pointMarmotteAudio = { 'x': 0, 'z': 0 };
 
@@ -131,7 +132,7 @@ function mainGame(){
             //pointTerrierAudio = repereAudio(tabMarmottestabMarmottes[tabMarmottes.length-1].getX(), tabMarmottes[tabMarmottes.length-1].getY());
             
 
-            // lancement du son
+            // lancement du son de déplacement
             audio.playMovingSound(2, 1);
             
             // pré placement des coordoonées audio pour éviter un clic lors du changement de place
@@ -160,6 +161,11 @@ function mainGame(){
 }
 
 function endGame(){
+    // on arrête les sons
+    sourceAmbiance.stop(0);
+    source.stop(0);
+    
+    // on affiche le score 
 	context.clearRect(0,0,canvas.width,canvas.height);
 	context.fillText("Félicitations vous avez obtenu un score de "+scoreValue,300,100);
 	register_score();

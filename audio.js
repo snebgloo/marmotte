@@ -48,14 +48,19 @@ Audio.prototype.init = function(){
                   }
                   bufferList[index] = buffer;
                   
-                  // si tous les fichiers sont chargés, on crée les murs
+                  // si tous les fichiers sont chargés, on crée les murs et on joue le son d'ambiance
                   if (++caller.loadedSounds == urlList.length) {
-                      murDevant = new Mur.prototype.init(contextAudio, 14, bufferList[3], 0.3);
-                      murDerriere = new Mur.prototype.init(contextAudio, -2, bufferList[3], 0.3);
+                      // son d'ambiance
+                      caller.playAmbiance(3);
+                                           
+                      murDevant = new Mur.prototype.init(contextAudio, 14, bufferList[1], 0.3);
+                      murDerriere = new Mur.prototype.init(contextAudio, -2, bufferList[1], 0.3);
                                            
                                            
                       murDevant.output.connect(contextAudio.destination);
                       murDerriere.output.connect(contextAudio.destination);
+                                   
+
                   }
                 },
                 function(error) {
@@ -78,14 +83,13 @@ Audio.prototype.init = function(){
         }; 
         
         // lecture d'un fichier son i du tableau de buffers
-        this.play = function(i) {
-            var source = contextAudio.createBufferSource();
-            source.buffer = bufferList[i];
+        this.playAmbiance = function(i) {
+            sourceAmbiance = contextAudio.createBufferSource();
+            sourceAmbiance.buffer = bufferList[i];
 
-            source.connect(contextAudio.destination);
-            
-            //source.playbackRate.value = 1;
-            source.start(i);
+            sourceAmbiance.connect(contextAudio.destination);
+            sourceAmbiance.loop = true;
+            sourceAmbiance.start(i);
        
          };
     
