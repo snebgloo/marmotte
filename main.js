@@ -20,10 +20,10 @@ var gameTime = 100;
 var audio;
 var contextAudio;
 var urlList =[
-                  'http://localhost:8888/V3/sound/terreMarmotte2.wav',
-                  'http://localhost:8888/V3/sound/impulseResponse.wav',
-                  'http://localhost:8888/V3/sound/marmotteBouge1.wav',
-                  'http://localhost:8888/V3/sound/ambianceNoBirds.wav'
+                  'sound/terreMarmotte2.wav',
+                  'sound/impulseResponse.wav',
+                  'sound/marmotteBouge1.wav',
+                  'sound/ambianceNoBirds.wav'
                 ];
 var bufferList = new Array();
 var bufferLoader;
