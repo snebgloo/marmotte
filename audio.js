@@ -51,16 +51,15 @@ Audio.prototype.init = function(){
                   // si tous les fichiers sont chargés, on crée les murs et on joue le son d'ambiance
                   if (++caller.loadedSounds == urlList.length) {
                       // son d'ambiance
-                      caller.playAmbiance(3);
+                      sourceAmbiance = caller.playSound(3, sourceAmbiance, true, false, null);
                                            
                       murDevant = new Mur.prototype.init(contextAudio, 14, bufferList[1], 0.3);
-                      murDerriere = new Mur.prototype.init(contextAudio, -2, bufferList[1], 0.3);
-                                           
+                      murDerriere = new Mur.prototype.init(contextAudio, -2, bufferList[1], 0.3);               
                                            
                       murDevant.output.connect(contextAudio.destination);
                       murDerriere.output.connect(contextAudio.destination);
-                                   
-
+                      var fullyLoaded = new Event("fullyLoaded");
+                      document.dispatchEvent(fullyLoaded);
                   }
                 },
                 function(error) {
@@ -82,51 +81,55 @@ Audio.prototype.init = function(){
             }
         }; 
         
-        // lecture d'un fichier son i du tableau de buffers
-        this.playAmbiance = function(i) {
-            sourceAmbiance = contextAudio.createBufferSource();
-            sourceAmbiance.buffer = bufferList[i];
+        // lecture d'un fichier son i, avec sa source associée et la variable de boucle du son, de spatialisation et de panner
+        this.playSound = function(i, source, loopVar, spatializeVar, pannerVar) {
+            source = contextAudio.createBufferSource();
+            source.buffer = bufferList[i];
 
-            sourceAmbiance.connect(contextAudio.destination);
-            sourceAmbiance.loop = true;
-            sourceAmbiance.start(i);
+            if(spatializeVar) {
+                murDevant.connect(source);
+                murDerriere.connect(source);
+
+                
+                // marmotte
+                if(pannerVar == 0) {
+                    // le panner gère l'emplacement de la source audio jouée
+                    pannerMarmotte = contextAudio.createPanner();
+
+                    // correspondance à échelle logarithmique de l'oreille
+                    pannerMarmotte.refDistance = 0.01;
+                    pannerMarmotte.rolloffFactor = 0.1;
+
+                    // connexion au graphe audio
+                    source.connect(pannerMarmotte);
+                    pannerMarmotte.connect(contextAudio.destination);
+                }
+                // terrier
+                else {
+                    // le panner gère l'emplacement de la source audio jouée
+                    pannerTerrier = contextAudio.createPanner();
+
+                    // correspondance à échelle logarithmique de l'oreille
+                    pannerTerrier.refDistance = 0.01;
+                    pannerTerrier.rolloffFactor = 0.1;
+
+                    // connexion au graphe audio
+                    source.connect(pannerTerrier);
+                    pannerTerrier.connect(contextAudio.destination);
+                }
+
+            }
+            else {
+                source.connect(contextAudio.destination);
+                source.loop = loopVar;
+                
+            }
+            // lecture du son
+            source.start(0);
+            return source;
        
          };
     
-    
-        // la source et le panner sont globaux pour le son binaural parce que ces variables sont modifiées selon la position de la marmotte dans le main
-        this.playMovingSound = function(i, playback) {
-            
-         
-             source = contextAudio.createBufferSource();
-             source.buffer = bufferList[i];
-             //source.loop = true;
-             source.playbackRate.value = playback;
-            
-            
-            murDevant.connect(source);
-            murDerriere.connect(source);
-            
-             // son envoyé de la même façon dans toutes les directions ?
-             panner = contextAudio.createPanner();
-//             panner.coneOuterGain = 1;
-//             panner.coneOuterAngle = 360;
-//             panner.coneInnerAngle = 0;
-            
-             // correspondance à échelle logarithmique de l'oreille
-             panner.refDistance = 0.01;
-             panner.rolloffFactor = 0.1;
-            
-            
-             // audio graph
-             source.connect(panner);
-            
-             panner.connect(contextAudio.destination);
-            
-             source.start(0);
-
-             
-        }
     
     
 

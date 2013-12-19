@@ -29,8 +29,8 @@ Mur.prototype.init = function(contextAudio, y, impulseResponse, maxGain){
         this.delay.delayTime = currentDelay;
         
         this.output.gain.value = this.gainValue * ( 1 / (600 - (totalDistance - this.distance)));
-        console.log(totalDistance);
-        console.log(this.output.gain.value);
+        //console.log(totalDistance);
+       console.log(this.output.gain.value);
     }
     
     

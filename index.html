@@ -11,13 +11,14 @@
 </head>
 
 <body>
-<canvas id="jeu" width="800" height="600" onClick="canvas_click(event)" onMouseOver="canvas_over(event)" onMouseOut="canvas_out(event)" onMouseMove="canvas_move(event)"></canvas>
-<div id="infos" style="float:right"><p>Score</p><p id="score"></p>
-<p>Time : </p><p id="time"></p></div>
-
+<canvas id="jeu" width="800" height="600" onClick="canvas_click(event)" onMouseOver="canvas_over(event)" onMouseOut="canvas_out(event)" onMouseMove="canvas_move(event)" style="visibility:none"></canvas>
+<div id="infos">
+	<button id="regles">REGLES</button>
+	<button id="jeuBtn" disabled="disabled" onclick="displayGame()">JOUER</button>
+</div>
 </body>
 <script type="text/javascript">
-	mainGame();
-	document.onkeyup=applyKey;
+	preload();
+	//document.onkeyup=applyKey;
 </script>
 </html>
